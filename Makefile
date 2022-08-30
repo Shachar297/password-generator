@@ -25,3 +25,10 @@ start_cluster:
 
 delete_node_cluster:
 	kubectl kustomize K8S | kubectl delete -f -
+
+init_vault:
+	chmod +x Vault/init.sh
+	./Vault/init.sh
+
+	
+	

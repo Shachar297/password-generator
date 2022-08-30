@@ -7,9 +7,9 @@ pod=${pod%?} # Remove quates from pod name comming from jq
 
 while true
 do
-
-    if [[ $pods == *"Running"* ]]; then
-        
+    # Wait until pods in generator namespace will be running to port-forward.
+    if [[ $(kubectl get po -n generator) == *"Running"* ]]; then
+        # port-forward pods on a local machine, Use NodePort on remote machine (SAS)
         kubectl port-forward \
             $pod \
             -n generator \
@@ -19,7 +19,7 @@ do
     else
 
     echo "Waiting for pods to be created..."
-    sleep 2
+    sleep 4
 
     fi
     

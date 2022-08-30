@@ -4,7 +4,6 @@ let
     passwordLength = 0;
 
 
-requestServerForOptions();
 
 
 async function requestServerForOptions() {
@@ -12,12 +11,13 @@ async function requestServerForOptions() {
 
     await fetch(serverUrl + "options/", {
         method: "GET",
-        headers : {
+        headers: {
             "Content-Type": "application/json"
         },
     }).then(res => {
         res.json().then(data => {
-            createButtonsFromServerOptions(data);
+
+            return createButtonsFromServerOptions(data);
         })
     }).catch(err => {
         console.error(err)
@@ -35,7 +35,7 @@ function createButtonsFromServerOptions(options) {
             button.disable;
             button.value = options[btn].html;
             button.setAttribute("type", options[btn].type)
-            if(button.type === "number") {
+            if (button.type === "number") {
                 button.id = "password-length-input"
             }
             document.body.childNodes[1].childNodes[1].appendChild(button);
@@ -52,27 +52,101 @@ function setDefaultPasswordLength() {
     document.getElementById("password-length-input").value = passwordLength;
 }
 
-async function onOptionButtonClick(e){
+async function onOptionButtonClick(e) {
 
-    if(e.target.type != "button") return;
+    if (e.target.type != "button") return;
 
     e.preventDefault();
     setDefaultPasswordLength();
-    
+
     await fetch(serverUrl, {
         method: "POST",
-        headers : {
+        headers: {
             "Content-Type": "application/json"
         },
 
-        body : JSON.stringify({
-            option : e.target.value,
-            passwordLength : passwordLength})
-    }).then(data =>{
-        data.json().then(json => {
-            console.log(json)
-            alert(JSON.stringify(json))
+        body: JSON.stringify({
+            option: e.target.value,
+            passwordLength: passwordLength
+        })
+    }).then(data => {
+        data.json().then(async json => {
+            console.log(json);
+            copyPasswordToClipboard(json)
+            await requestServerForVaultOptions();
         })
     })
 
 }
+
+
+async function requestServerForVaultOptions() {
+
+    await fetch(serverUrl + "vault/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(data => {
+        console.log(data)
+        data.json().then(json => {
+            createVaultOptions(json)
+        })
+    })
+}
+
+function createVaultOptions(elements) {
+    
+    if (elements.length <= 0) return;
+    
+    let
+        createdElement,
+        selectElement;
+
+    const appender = document.querySelectorAll(".generator-form")[0];
+    
+    for (let element = 0; element < elements.length; element++) {
+
+        createdElement = document.createElement(elements[element].element);
+
+        if (elements[element].element == "select") {
+            elements[element].element.id = "vault-operation"
+            appender.appendChild(createdElement);
+            selectElement = createdElement;
+
+        } else if (elements[element].element == "option") {
+
+            selectElement.appendChild(createdElement)
+            createdElement.value = elements[element].option
+            createdElement.innerText = elements[element].option;
+
+        } else if (elements[element].element == "input") {
+
+            createdElement.value = elements[element].html;
+            createdElement.setAttribute("type", elements[element].type)
+            appender.appendChild(createdElement);
+
+        }
+
+        if(elements[element].type && elements[element].type == "text") {
+            createdElement.value = ""
+            createdElement.placeholder = elements[element].html
+            createdElement.style.border = "none"
+            createdElement.style.borderBottom = "solid black 2px"
+
+        }
+    }
+
+}
+
+
+async function copyPasswordToClipboard(password) {
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+
+        alert("Your Password has been copied to clipboard!")
+        return await navigator.clipboard.writeText(password.randomPassword);
+
+    }
+}
+
+requestServerForOptions();

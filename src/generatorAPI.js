@@ -4,18 +4,34 @@ const
 let
     isInit = true;
 
+
+async function initGenerator(req, res,next) {
+    try {
+        res.json(utils.handleOptions());
+        isInit = false;
+    } catch (error) {
+        
+    }
+}
+
 async function executeGenerator(req, res, next) {
 
     try {
-        if (isInit) {
-            res.json(utils.handleOptions());
-        }
+
         res.json(await handleRequest(req));
 
     } catch (error) {
         return next(error);
     }
 
+}
+
+async function handleVaultOptions(req,res,next) {
+    try {
+        res.json(await utils.handleVaultOptions());
+    } catch (error) {
+        return next(error);
+    }
 }
 
 function handleRequest(req) {
@@ -38,6 +54,9 @@ async function handleRoute(option, passwordLength) {
 
 
 
+
 module.exports = {
-    executeGenerator
+    executeGenerator,
+    initGenerator,
+    handleVaultOptions
 }

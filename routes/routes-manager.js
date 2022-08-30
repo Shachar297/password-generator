@@ -11,6 +11,9 @@ router.get('/', (req, res) => {
 // Process the presence event
 router.post('/', generatorAPI.executeGenerator);
 
-router.get("/options/", generatorAPI.executeGenerator);
+router.post("/vault/", generatorAPI.handleVaultOptions);
+
+router.get("/options/", generatorAPI.initGenerator);
+
 
 module.exports = router;

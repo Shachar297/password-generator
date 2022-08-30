@@ -70,8 +70,8 @@ body {
 
 
 .generator-options input {
-    width: 10vw;
-    height: 6vh;
+    width: 15vw;
+    height: 4vh;
     margin-right: auto;
     margin-left: auto;
     border: navajowhite;
@@ -85,6 +85,10 @@ body {
     cursor: pointer;
 }
 
+.generator-options input:first-child{
+    margin-bottom: -18vh;
+}
+
 .generator-options input:hover{
     box-shadow: rgb(187, 184, 184, 0.5) 0.5vh 0.5vh 0.5vh 0.5vh;
     transition: 0.2s;
@@ -96,4 +100,26 @@ body {
 
 input[type=number] {
     text-align: center;
+}
+
+.generator-form > *{
+    width: 15vw;
+    height: 4vh;
+    border: solid rgba(0, 0, 0, 0.389) 1px;
+    border-radius: 0.5vh;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    transition: 0.5s;
+
+}
+
+.generator-form > *:hover{
+    transition: 0.5s;
+    box-shadow: rgba(249, 195, 116, 0.784) 0.2vh 0.2vh 0.2vh 0.2vh ;
+    background-color: rgba(128, 128, 128, 0.484);
+}
+
+.generator-form > *:not(:hover) {
+    transition: 0.5s;
 }
