@@ -1,5 +1,5 @@
 # add hashicorp/vault to helm repo
-policiyUploader="bigbi"
+policiyUploader="local"
 helm repo add hashicorp https://helm.releases.hashicorp.com
 
 # Install vault.
