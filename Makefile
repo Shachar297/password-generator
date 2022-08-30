@@ -17,8 +17,8 @@ deploy_node:
 	./docker/dockerLogin.sh	
 	echo "PORT=8755" > K8S/.env
 	kubectl kustomize K8s | kubectl apply -f -
-	chmod +x while.sh
-	./while.sh
+	chmod +x K8S/pForward.sh
+	./K8S/pForward.sh
 
 start_cluster:
 	minikube start
