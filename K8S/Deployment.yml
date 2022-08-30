@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: generator
+  template:
+    metadata:
+      labels:
+        app: generator
+    spec:
+      containers:
+        - name: generator
+          image: shacharovadia/generator
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8755
+          envFrom:
+            - secretRef:
+                name: generator-secrets
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
