@@ -8,7 +8,7 @@ steps:
     script : | 
       baseDir=$(pwd) 
       
-      
+      ls -la 
       cat server/package.json
       cat server/package.json | grep cors
 
