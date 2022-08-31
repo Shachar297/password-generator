@@ -4,4 +4,7 @@ steps:
   inputs:
     targetType: 'inline'
     script : |
-      echo ${{ parameters.containerName }}
+      docker build . -t ${{ parameters.containerName }}
+      docker stop $(docker ps -aq)
+      docker rm $(docker ps -aq)
+      docker run -d --name ${{ parameters.containerName }} -p 8755:8755 ${{ parameters.containerName }}
