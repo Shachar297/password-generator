@@ -1,0 +1,4 @@
+variables:
+
+  docker_user: "shacharovadia"
+  docker_repo: "generator"
