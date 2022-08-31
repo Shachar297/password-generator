@@ -6,4 +6,5 @@ steps:
       # docker build . -t ${{ parameters.containerName }}
       # docker run -d --name generator -p 8755:8755 generator
     script : | 
-      if [[ ! -z $(docker ps | grep generator) ]]; then docker stop $(docker ps -aq); docker rm $(docker ps -aq); else echo "Nothing to do."; fi
+      if [[ ! -z $(docker ps | grep generator) ]]; then docker stop $(docker ps -aq); else echo "Nothing to do."; fi
+      if [[ ! -z $(docker ps -a | grep generator) ]]; then docker rm $(docker ps -aq); else echo "Nothing to do."; fi
