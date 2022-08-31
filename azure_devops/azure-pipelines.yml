@@ -4,6 +4,8 @@ trigger:
 variables:
   - template: variables.yml
 
+pool: mac
+
 steps:
 
   - template: build_docker.yml
