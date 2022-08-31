@@ -4,5 +4,4 @@ steps:
   inputs:
     targetType: 'inline'
     script : |
-      echo $(docker_user)
-      echo ${{ docker_user }}
+      echo ${{ parameters.containerName }}
