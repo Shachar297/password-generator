@@ -11,3 +11,5 @@ steps:
       
       cat server/package.json
       cat server/package.json | grep cors
+
+      make build_node
