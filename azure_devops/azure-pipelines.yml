@@ -10,6 +10,7 @@ steps:
 
   # - template: docker_login.yml
 
+  - template: clean-docker.yml
 
   - template: build_docker.yml
     parameters:
