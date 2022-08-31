@@ -1,8 +1,8 @@
 steps:
 - task: Bash@3
+  displayName: Docker Build Docker Run
   inputs:
     targetType: 'inline'
     script : |
-      echo $(pwd)
-      pwd
-      ls -la
+      echo $(docker_user)
+      echo ${{ docker_user }}
