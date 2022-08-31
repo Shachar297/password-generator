@@ -163,7 +163,7 @@ async function storeSecret(e) {
     }).then(data => {
         console.log(data)
         data.json().then(json => {
-            createVaultOptions(json)
+            alert(JSON.stringify(json, null, 4))
         })
     })
 }

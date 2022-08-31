@@ -59,7 +59,14 @@ async function handleVaultOperations(req, res, next) {
         secretUploader = req.body,
         password
     try {
-        res.send(await kubernetesHandler.handleVaultOperations('t3', "12345678"));
+        const vaultOperationResponse = await kubernetesHandler.handleVaultOperations('t3', "12345678")
+        res.send({
+            status: "success",
+            statusCode: 200,
+            message: `Your secret has been Stored at secret/t3.`,
+            vaultCommand: `vault kv get -version=1 secret/t3`,
+            fullCommandExecuted: "kubectl exec -n vault vault-0 -- vault kv get -version=1 secret/t3"
+        });
     } catch (error) {
         return next(error)
     }
