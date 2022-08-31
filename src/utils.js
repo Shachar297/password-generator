@@ -10,8 +10,7 @@ const generatorOptions = [
         { element: "select" },
         { element: "option", option: "Hashicorp Vault" },
         { element: "option", option: "Azure Key Vault" },
-        { element: "input", html: "Vault Base Url", type: "text" },
-        { element: "input", html: "Vault Port (Optional for cloud users)", type: "text" },
+        { element: "input", html: "Key Name (eg. Password)", type: "text" },
         { element: "input", html: "Secret Path", type: "text" },
         { element: "input", html: "Integrate Vault", type: "button" }
     ];

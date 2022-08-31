@@ -2,7 +2,8 @@ let
     generatorOptions = ["Generate Random Password", "Oauth2 Generator"],
     serverUrl = "http://localhost:8755/api/",
     passwordLength = 0,
-    userPasswordToStore = "";
+    userPasswordToStore = "",
+    isVaultOptions = false;
 
 
 
@@ -74,7 +75,10 @@ async function onOptionButtonClick(e) {
         data.json().then(async json => {
             console.log(json);
             copyPasswordToClipboard(json)
-            await requestServerForVaultOptions();
+            if(!isVaultOptions) {
+                await requestServerForVaultOptions();
+            }
+            isVaultOptions = true;
         })
     })
 
@@ -134,22 +138,40 @@ function createVaultOptions(elements) {
             }
         }
 
-        if(elements[element].type && elements[element].type == "text") {
-            createdElement.value = ""
-            createdElement.placeholder = elements[element].html
-            createdElement.style.border = "none"
-            createdElement.style.borderBottom = "solid black 2px"
-
-        }
+            handleTextOption(createdElement, elements[element])
     }
 
 }
 
 
+function handleTextOption(createdElement, parsedElement) {
+    if(parsedElement.type && parsedElement.type == "text") {
+        createdElement.value = ""
+        createdElement.placeholder = parsedElement.html
+        createdElement.style.border = "none"
+        createdElement.style.borderBottom = "solid black 2px"
+
+        if(parsedElement.html == "Secret Path") {
+            createdElement.id = "vault-secret-path"
+        }else if(parsedElement.html.indexOf("Key Name") != -1) {
+            createdElement.id = "vault-key-name"
+        }
+
+    }
+}
+
 
 async function storeSecret(e) {
 
     e.preventDefault()
+
+    const 
+        keyNameValue = document.getElementById("vault-key-name").value,
+        secretPathValue = document.getElementById("vault-secret-path").value;
+
+
+    if(!isUserInputValid(keyNameValue, secretPathValue)) return;
+  
 
     await fetch(serverUrl + "vault/", {
         method: "POST",
@@ -157,8 +179,9 @@ async function storeSecret(e) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            secretUploader: "Shachar",
-            password : "123456"
+            secretUploader: secretPathValue,
+            keyName: keyNameValue,
+            password : userPasswordToStore
         })
     }).then(data => {
         console.log(data)
@@ -168,9 +191,18 @@ async function storeSecret(e) {
     })
 }
 
+function isUserInputValid(keyName, secretPath) {
+    if((!keyName || keyName.length <= 2) || (!secretPath || secretPath.length <= 2)) {
+        alert("Please provide a key name and secret path that's greater than 2 characters.");
+        return false
+    }
+    return true;
+
+}
+
 async function copyPasswordToClipboard(password) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
-
+        userPasswordToStore = password;
         alert("Your Password has been copied to clipboard!")
         return await navigator.clipboard.writeText(password.randomPassword);
 

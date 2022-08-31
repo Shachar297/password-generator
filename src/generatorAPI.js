@@ -54,12 +54,12 @@ async function handleRoute(option, passwordLength) {
 }
 
 async function handleVaultOperations(req, res, next) {
-    console.log(req.body)
+
     let 
         secretUploader = req.body,
         password
     try {
-        const vaultOperationResponse = await kubernetesHandler.handleVaultOperations('t3', "12345678")
+        const vaultOperationResponse = await kubernetesHandler.handleVaultOperations(req.body)
         res.send({
             status: "success",
             statusCode: 200,
