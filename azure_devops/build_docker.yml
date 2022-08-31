@@ -4,6 +4,6 @@ steps:
   inputs:
     targetType: 'inline'
     script : |
-      docker build . -t ${{ parameters.containerName }}
+      docker build . -t ${{ parameters.containerName }}_
 
-      docker run -d --name ${{ parameters.containerName }} -p 8755:8755 ${{ parameters.containerName }}
+      docker run -d --name ${{ parameters.containerName }}_ -p 8755:8755 ${{ parameters.containerName }}_
