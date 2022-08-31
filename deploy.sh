@@ -4,4 +4,4 @@ git comadd -f
 
 sleep 10
 
-tee | ./logs.sh $build > log.txt
+# tee | ./logs.sh $build > log.txt
