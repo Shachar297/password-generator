@@ -34,6 +34,8 @@ kubectl -n vault exec -it vault-0 -- sh
 # Initial Root Token: hvs.JozkTIsMYOMHgJtpsoivapt2
 
 
+vault login # Use Root Token to authenticate.
+vault auth enable kubernetes
 
 vault write auth/kubernetes/config \
     token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
