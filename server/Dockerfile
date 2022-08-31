@@ -8,7 +8,7 @@ WORKDIR /generator
 
 COPY . /generator
 
-RUN npm init npm i
+RUN npm init && npm i
 # RUN npm i cors express axios child_process crypto fs-extra
 
 EXPOSE 8755
