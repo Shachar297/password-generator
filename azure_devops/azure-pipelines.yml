@@ -4,7 +4,7 @@ trigger:
 variables:
   - template: variables.yml
 
-pool: mac
+pool: my_mac
 
 steps:
 
