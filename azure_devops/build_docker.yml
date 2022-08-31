@@ -5,8 +5,9 @@ steps:
     targetType: 'inline'
       # docker build . -t ${{ parameters.containerName }}
       # docker run -d --name generator -p 8755:8755 generator
-    script : |  
-      echo $(pwd)
-      ls -la
-      cat package.json
-      cat package.json | grep cors
+    script : | 
+      baseDir=$(pwd) 
+      
+      
+      cat server/package.json
+      cat server/package.json | grep cors
