@@ -1,5 +1,5 @@
+export build=$((build+1))
 echo $build
-build=$((build+1))
 git comadd -f
 
 sleep 10
