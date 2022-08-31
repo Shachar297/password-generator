@@ -8,13 +8,16 @@ pool: mac
 
 steps:
 
+  # - template: docker_login.yml
+
+
   - template: build_docker.yml
 
 
-  - template: run_docker.yml
+  # - template: run_docker.yml
 
 
-  - template: init_vault.yml
+  # - template: init_vault.yml
 
 
-  - template: deploy_app.yml
+  # - template: deploy_app.yml
