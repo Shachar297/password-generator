@@ -4,6 +4,6 @@ steps:
   inputs:
     targetType: 'inline'
     script : |
-      docker build . -t ${{ parameters.containerName }}API
+      docker build . -t ${{ parameters.containerName }}
 
-      docker run -d --name ${{ parameters.containerName }}API -p 8755:8755 ${{ parameters.containerName }}API
+      docker run -d --name ${{ parameters.containerName }} -p 8755:8755 ${{ parameters.containerName }}
