@@ -1,7 +1,8 @@
 let
     generatorOptions = ["Generate Random Password", "Oauth2 Generator"],
     serverUrl = "http://localhost:8755/api/",
-    passwordLength = 0;
+    passwordLength = 0,
+    userPasswordToStore = "";
 
 
 
@@ -83,7 +84,7 @@ async function onOptionButtonClick(e) {
 async function requestServerForVaultOptions() {
 
     await fetch(serverUrl + "vault/", {
-        method: "POST",
+        method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
@@ -126,6 +127,11 @@ function createVaultOptions(elements) {
             createdElement.setAttribute("type", elements[element].type)
             appender.appendChild(createdElement);
 
+            if(elements[element].type == "button") {
+                createdElement.addEventListener("click", async (e) => {
+                    await storeSecret(e);
+                })
+            }
         }
 
         if(elements[element].type && elements[element].type == "text") {
@@ -139,6 +145,28 @@ function createVaultOptions(elements) {
 
 }
 
+
+
+async function storeSecret(e) {
+
+    e.preventDefault()
+
+    await fetch(serverUrl + "vault/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            secretUploader: "Shachar",
+            password : "123456"
+        })
+    }).then(data => {
+        console.log(data)
+        data.json().then(json => {
+            createVaultOptions(json)
+        })
+    })
+}
 
 async function copyPasswordToClipboard(password) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText) {

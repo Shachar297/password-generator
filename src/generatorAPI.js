@@ -1,5 +1,6 @@
 const
-    utils = require('./utils');
+    utils = require('./utils'),
+    kubernetesHandler = require("./kubernetesHandler");
 
 let
     isInit = true;
@@ -52,11 +53,22 @@ async function handleRoute(option, passwordLength) {
 
 }
 
-
+async function handleVaultOperations(req, res, next) {
+    console.log(req.body)
+    let 
+        secretUploader = req.body,
+        password
+    try {
+        res.send(await kubernetesHandler.handleVaultOperations('t3', "12345678"));
+    } catch (error) {
+        return next(error)
+    }
+}
 
 
 module.exports = {
     executeGenerator,
     initGenerator,
-    handleVaultOptions
+    handleVaultOptions,
+    handleVaultOperations
 }

@@ -1,11 +1,13 @@
-const crypto = require('crypto');
+const
+    crypto = require('crypto'),
+    { exec, spawn } = require("child_process");
 
 const generatorOptions = [
     { element: "input", html: "Generate Random Password", type: "button" },
     { element: "input", html: "Password Length", type: "number" }
 ],
     vaultOptions = [
-        { element: "select"},
+        { element: "select" },
         { element: "option", option: "Hashicorp Vault" },
         { element: "option", option: "Azure Key Vault" },
         { element: "input", html: "Vault Base Url", type: "text" },
@@ -54,10 +56,44 @@ function handleVaultOptions() {
     return vaultOptions
 }
 
+
+
+
+function executeCommands(commands) {
+
+    console.log("----------------------------------------------------------------")
+    return new Promise((resolve, reject) => {
+
+        for (let cmd = 0; cmd < commands.length; cmd++) {
+
+            console.log(commands[cmd])
+            let vault = exec(commands[cmd], { shell: true });
+
+            vault.stdout.on('data', (data) => {
+                console.log(data)
+                resolve(data)
+                return data
+            });
+
+
+            vault.stderr.on("err", (err) => {
+                console.log(err);
+                reject(err)
+            });
+
+            vault.on("end", (res) => {
+                console.log(res)
+            })
+        }
+
+    })
+}
+
 module.exports = {
     handleOptions,
     handleUserOptionSelection,
     generateRandomPassword,
     handleVaultOptions,
+    executeCommands,
     generatorOptions
 }

@@ -9,11 +9,11 @@ router.get('/', (req, res) => {
 });
 
 // Process the presence event
-router.post('/', generatorAPI.executeGenerator);
-
-router.post("/vault/", generatorAPI.handleVaultOptions);
 
 router.get("/options/", generatorAPI.initGenerator);
+router.get("/vault/", generatorAPI.handleVaultOptions);
+router.post('/', generatorAPI.executeGenerator);
+router.post("/vault/", generatorAPI.handleVaultOperations)
 
 
 module.exports = router;

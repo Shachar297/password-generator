@@ -16,7 +16,7 @@ helm install vault hashicorp/vault \
 
 # initialize vault.
 
-sleep 30
+sleep 10
 
 kubectl -n vault exec -it vault-0 -- vault operator init
 
@@ -25,13 +25,13 @@ kubectl -n vault exec -it vault-0 -- sh
 # vault operator unseal
 # !!!!! Do this 5 times on each unseal key :
 
-# Unseal Key 1: OoSKttWnlU/F68tEPbj9Gm0+1CQg6mRCbZRCO8hy1raL
-# Unseal Key 2: uWOaYcIDGgleBk5Wkmmk6sYi/0PkJ2TkNxJT8LTh+gih
-# Unseal Key 3: mPNao3syWabGUtX31DPK9zC6v7oSZcsh5aXy383m2Qse
-# Unseal Key 4: 7PgprL9F7zdjr7uAQI1izarpUnez3MK5dCHTA4RTdLJl
-# Unseal Key 5: RV/XjDOVU4snOg9RJZqmWqyj5l5eUBYzHxm512ir7Md7
+# Unseal Key 1: D59+l9Ci1wpyZpk09aJBaNc/Zoo1kBLEOklRlgd0YEx5
+# Unseal Key 2: xmzL6V6jmlDw8uEODBzqTODB87uAz3XtNJVY1NN39v60
+# Unseal Key 3: OjZK6/ZHVHjXZCAZgj9YDWx5RMU10JgjPtzotmhRrcw8
+# Unseal Key 4: krsimM9/v2bL+JRC1nKfLPrFXJ6lqAAqh4Vn1boOW8pi
+# Unseal Key 5: TWD9UKxjhGDl1cUmxzQ/RhZWe6CUw5tqinRUJcUtvRlM
 
-# Initial Root Token: hvs.UmgkpIIhHudj5ffnbr2Qsz2Y
+# Initial Root Token: hvs.JozkTIsMYOMHgJtpsoivapt2
 
 
 
@@ -64,12 +64,12 @@ vi /home/vault/app-policy.hcl
 # -------- Text ends here
 
 
-vault policy write $policiyUploader /home/vault/app-policy.hcl
+vault policy write local /home/vault/app-policy.hcl
 
 vault secrets enable -path=secret/ kv
 
-vault kv put secret/$policitUploader = access-token="123"
+vault kv put secret/local = access-token="123"
 
-vault kv list secret/$policitUploader
+vault kv list secret/local
 
-Vault kv get -version=1 secret/$policitUploader
+vault kv get -version=1 secret/local
