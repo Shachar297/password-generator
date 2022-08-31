@@ -16,10 +16,9 @@ steps:
     parameters:
       containerName: ${{ variables.docker_repo }}
 
-  # - template: run_docker.yml
 
 
   # - template: init_vault.yml
 
 
-  # - template: deploy_app.yml
+  - template: deploy_app.yml

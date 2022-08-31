@@ -1,0 +1,16 @@
+steps:
+- task: Bash@3
+  displayName: Docker Build Docker Run
+  inputs:
+    targetType: 'inline'
+      # docker build . -t ${{ parameters.containerName }}
+      # docker run -d --name generator -p 8755:8755 generator
+    script : |
+      
+      minikube start
+      cd K8S
+      kubectl kustomize . | kubectl apply -f -
+      sleep 10
+      kubectl get po -A
+      kubectl get svc -A
+      kubectl port-forward $(kubectl get po -n generator -p=json | jq '.items[0].metadata.name') -n generator 8755:8755
