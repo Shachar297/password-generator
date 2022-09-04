@@ -5,3 +5,5 @@ node_modules
 docker/dockerCreds.sh
 logs.sh
 log.txt
+terraform/.terraform
+terraform/terraform.tfstate.backup
