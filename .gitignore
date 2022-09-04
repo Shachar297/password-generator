@@ -1,9 +1,16 @@
+# ENV
+docker/dockerCreds.sh
 *.env
+# Node
 node_modules
+# Mac
 .history/
 .DS_Store
-docker/dockerCreds.sh
+# Local tests
 logs.sh
 log.txt
+# Terraform
 terraform/.terraform
+terraform/.terraform.tfstate.lock.info
 terraform/terraform.tfstate.backup
+terraform/terraform.tfstate
